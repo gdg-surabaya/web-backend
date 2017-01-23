@@ -1,12 +1,19 @@
-from ..model import Members
+from ..model import Members, Member
 import copy
 import falcon
 
 class MembersListener:
-    def on_post(self, req, res):
-        # body = req.get_param("email")
-        # print(body)
+    def on_get(self, req, res):
+        members = Members().find_all()
 
+        result = {"members":[]}
+        for member in members:
+            result["members"].append(member.to_dict())
+
+        req.context["result"] = result
+        res.status_code = falcon.HTTP_200
+
+    def on_post(self, req, res):
         if "doc" not in req.context:
             raise falcon.HTTPBadRequest('Missing thing', 'A thing must be submitted in the request body.')
         data = copy.deepcopy(req.context["doc"])
@@ -14,8 +21,8 @@ class MembersListener:
         if "email" not in data:
             raise falcon.HTTPBadRequest("Cannot find email", "Email is not provided when you are requesting this API.")
         
-        member = Members(email=data["email"])
-        member.save()
+        members = Members(members=[Member(email=data["email"])])
+        members.save()
 
         req.context["result"] = {"status":{
             "code": "200",
