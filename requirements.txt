@@ -1,0 +1,9 @@
+arrow==0.10.0
+falcon==1.1.0
+falcon-cors==1.1.2
+gunicorn==19.6.0
+profig==0.4.1
+pymongo==3.4.0
+python-dateutil==2.6.0
+python-mimeparse==1.6.0
+six==1.10.0
