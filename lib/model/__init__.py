@@ -31,7 +31,7 @@ class Members:
             member_exists = db.members.count({"email": self.email})
             member_exists = True if member_exists > 0 else False
 
-            if not exists:
+            if not member_exists:
                 db.members.insert({
                     "email": self.email,
                     "registrationDate": arrow.utcnow().datetime
