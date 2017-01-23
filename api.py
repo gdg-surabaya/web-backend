@@ -2,8 +2,13 @@ from lib.listeners import MembersListener
 from lib.middleware import RequireJSON, JSONTranslator
 from falcon_cors import CORS
 import falcon
+import profig
+import os
 
-DEV = False
+cfg = profig.Config(os.path.join(os.getcwd(), "config.ini"))
+cfg.sync()
+
+DEV = True if cfg["config.development"] == "true" else False
 
 if not DEV:
     cors = CORS(
