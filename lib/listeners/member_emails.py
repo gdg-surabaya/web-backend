@@ -44,7 +44,7 @@ class MemberEmailsListener:
 
             verification_html = Template(open(os.path.join(os.getcwd(), "assets", "email-verification.html")).read())
             verification_html = verification_html.render(
-                verification_address = "http://gdgsurabaya.org/verify/%s" % verification.key
+                verification_address = "http://verify.gdgsurabaya.org/%s" % verification.key
             )           
 
             email_data.update({"subject": "GDG Surabaya email verification"})
