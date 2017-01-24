@@ -5,6 +5,8 @@ import os
 import logging
 import arrow
 
+from .verification import Verification
+
 class Member:
     def __init__(self, **kwargs):
         logger = logging.getLogger("Member.__init__")
@@ -17,6 +19,16 @@ class Member:
         logger.info("Opening a configuration from %s" % self.config_path)
         self.config = profig.Config(self.config_path)
         self.config.sync()
+
+    @property
+    def exists(self):
+        conn = pymongo.MongoClient(self.config["database.connection_string"])
+        try:
+            client = conn["gdg-surabaya"]
+            member_data = client.members.find_one({"email": self.email})
+            return False if member_data is None else True
+        finally:
+            conn.close()
 
     @property
     def registration_date(self):
