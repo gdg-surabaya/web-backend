@@ -1,4 +1,4 @@
-from lib.listeners import MembersListener, MemberEmailsListener
+from lib.listeners import MembersListener, MemberEmailsListener, VerificationListener
 from lib.middleware import RequireJSON, JSONTranslator
 from falcon_cors import CORS
 import falcon
@@ -30,3 +30,4 @@ api = falcon.API(middleware=[
 ])
 api.add_route("/members", MembersListener())
 api.add_route("/members/{email}/emails",  MemberEmailsListener())
+api.add_route("/verifications/{key}", VerificationListener())

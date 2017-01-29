@@ -45,3 +45,11 @@ class Verification:
             })
         finally:
             conn.close()
+
+    def verify(self):
+        conn = pymongo.MongoClient(self.config["database.connection_string"])
+        try:
+            client = conn["gdg-surabaya"]
+            client.verifications.update({"key": self.key}, {"$set":{"isVerified": True}})
+        finally:
+            conn.close()
