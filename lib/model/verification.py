@@ -50,6 +50,6 @@ class Verification:
         conn = pymongo.MongoClient(self.config["database.connection_string"])
         try:
             client = conn["gdg-surabaya"]
-            client.verifications.update({"key": self.key}, {"$set":{"isVerified": True}})
+            client.verifications.update_many({"key": self.key}, {"$set":{"isVerified": True}})
         finally:
             conn.close()
