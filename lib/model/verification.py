@@ -51,5 +51,7 @@ class Verification:
         try:
             client = conn["gdg-surabaya"]
             client.verifications.update_many({"key": self.key}, {"$set":{"isVerified": True}})
+            member = client.verifications.find_one({"key": self.key})
+            client.members.update({"email": member["owner"]}, {"$set":{"isVerified": True}})
         finally:
             conn.close()
