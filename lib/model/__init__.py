@@ -13,7 +13,8 @@ class Member:
 
         self.email = kwargs.get("email", None)
         self.name = kwargs.get("name", None)
-        self.registration_date = kwargs.get("registration_date", None)        
+        self.registration_date = kwargs.get("registration_date", None)    
+        self.is_verified = kwargs.get("is_verified", None)    
         self.config_path = os.path.join(os.getcwd(), "config.ini")
 
         logger.info("Opening a configuration from %s" % self.config_path)
@@ -52,7 +53,8 @@ class Member:
         return {
             "name": self.name,
             "email": self.email,
-            "registrationDate": self.registration_date
+            "registrationDate": self.registration_date,
+            "isVerified": self.is_verified
         }
 
     def save(self):
@@ -93,7 +95,8 @@ class Members:
                 yield Member(
                     email = member["email"] if "email" in member else "",
                     name = member["name"] if "name" in member else "",
-                    registration_date = member["registrationDate"] if "registrationDate" in member else ""
+                    registration_date = member["registrationDate"] if "registrationDate" in member else "",
+                    is_verified = member["isVerified"] if "isVerified" in member else None
                 )
         finally:
             conn.close()
