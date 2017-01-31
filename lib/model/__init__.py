@@ -5,8 +5,6 @@ import os
 import logging
 import arrow
 
-from .verification import Verification
-
 class Member:
     def __init__(self, **kwargs):
         logger = logging.getLogger("Member.__init__")
